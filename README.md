@@ -23,6 +23,13 @@ docker build -t xdebug .
 
 Per attivare il debug bisogna inviare un header http con chiave: X-Forwarded-For e nel valore l'ip della macchina host
 
+# TODO
+
+Modificare le istruzioni successive per renderle compatibili con questo container
+per esempio: (da lanciare nella root del progetto php e cambiare progettophp con il nome del progetto)
+docker run -d --name progettophp -p 80:80 -p 443:443 -p 8022:22 -v `pwd`:/var/www/html  -t xdebug:latest 
+
+
 # Example Usage with Data Inside Docker
 
  Download and run this container with: 
