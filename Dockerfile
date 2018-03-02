@@ -1,5 +1,5 @@
 FROM centos:centos7
-MAINTAINER Wesley Render <wes.render@outlook.com>
+MAINTAINER Luca Forni <l.forni@modalsource.com>
 
 # Install varioius utilities
 RUN yum -y install curl wget unzip git vim \
@@ -28,7 +28,10 @@ RUN yum -y install httpd mod_ssl exim
 RUN wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm \
 && rpm -Uvh remi-release-7.rpm \
 && yum-config-manager --enable remi-php70 \
-&& yum -y install php php-devel php-gd php-pdo php-soap php-xmlrpc php-xml
+&& yum -y install php php-devel php-gd php-pdo php-soap php-xmlrpc php-xml php-pecl-xdebug
+
+# Reconfigure XDebug
+COPY 15-xdebug.ini /etc/php.d/15-xdebug.ini
 
 # Reconfigure Apache
 RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/httpd/conf/httpd.conf \
@@ -52,15 +55,15 @@ COPY MariaDB.repo /etc/yum.repos.d/MariaDB.repo
 RUN yum clean all;yum -y install mariadb-server mariadb-client
 
 # Setup Drush
-RUN wget http://files.drush.org/drush.phar \
-&& chmod +x drush.phar \
-&& mv drush.phar /usr/local/bin/drush
+#RUN wget http://files.drush.org/drush.phar \
+#&& chmod +x drush.phar \
+#&& mv drush.phar /usr/local/bin/drush
 
 # Setup NodeJS
-RUN curl --silent --location https://rpm.nodesource.com/setup_6.x | bash - \
-&& yum -y install nodejs gcc-c++ make \
-&& npm install -g npm \
-&& npm install -g gulp grunt-cli
+#RUN curl --silent --location https://rpm.nodesource.com/setup_6.x | bash - \
+#&& yum -y install nodejs gcc-c++ make \
+#&& npm install -g npm \
+#&& npm install -g gulp grunt-cli
 
 # UTC Timezone & Networking
 RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime \

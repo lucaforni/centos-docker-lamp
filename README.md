@@ -11,8 +11,17 @@ A CentOS 7 Docker LAMP suitable for local Drupal or WordPress development. This 
 - SSH
 - phpMyAdmin
 - Git
-- Drush
-- NodeJS
+- (disabled) Drush
+- (disabled) NodeJS
+- xdebug in connect back configuration
+
+# Build
+
+docker build -t xdebug .
+
+# XDebug
+
+Per attivare il debug bisogna inviare un header http con chiave: X-Forwarded-For e nel valore l'ip della macchina host
 
 # Example Usage with Data Inside Docker
 
